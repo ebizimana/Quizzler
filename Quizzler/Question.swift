@@ -15,6 +15,5 @@ class Question {
     init(text: String, correctAnswer: Bool){
         questionTest = text
         answer = correctAnswer
-        
     }
 }
