@@ -58,7 +58,7 @@ class ViewController: UIViewController {
         if questionNumber <= 12 {
             questionLabel.text = allQuestions.list[questionNumber].questionTest
             updateUI()
-        } else{ // Restart 
+        } else{ // Restart The Question bank
             let alert = UIAlertController(title: "Awesome", message: "Do you want to start again?", preferredStyle: .alert)
             let restartAction = UIAlertAction(title: "Restart", style: .default, handler: { (UIAlertAction) in
                 self.startOver()
@@ -75,10 +75,10 @@ class ViewController: UIViewController {
         
         if corrextAnswer == pickedAnswer {
             score += 1
-            print("You got it!")
+            ProgressHUD.showSuccess("Correct!")
         }
         else {
-            print("Wrong")
+            ProgressHUD.showError("Wrong")
         }
         
     }
