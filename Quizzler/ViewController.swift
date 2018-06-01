@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     let allQuestions = QuestionBank()
     var pickedAnswer: Bool = false
     var questionNumber: Int = 0
+    var score: Int = 0
+    
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -23,8 +25,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let firstQuestion = allQuestions.list[questionNumber]
-        questionLabel.text = firstQuestion.questionTest
+        nextQuestion()
         
     }
 
@@ -41,21 +42,29 @@ class ViewController: UIViewController {
         questionNumber += 1
         nextQuestion()
         
-  
     }
     
     
     func updateUI() {
+        progressLabel.text = "\(questionNumber+1) / 13"
+        scoreLabel.text = "Socre: \(score)"
+        
+        progressBar.frame.size.width = (view.frame.size.width / 13) * CGFloat(questionNumber + 1)
       
     }
     
 
     func nextQuestion() {
-        if questionNumber <= 12{
+        if questionNumber <= 12 {
             questionLabel.text = allQuestions.list[questionNumber].questionTest
-        } else{
-            print("End of Quiz!")
-            questionNumber = 0
+            updateUI()
+        } else{ // Restart 
+            let alert = UIAlertController(title: "Awesome", message: "Do you want to start again?", preferredStyle: .alert)
+            let restartAction = UIAlertAction(title: "Restart", style: .default, handler: { (UIAlertAction) in
+                self.startOver()
+            })
+            alert.addAction(restartAction)
+            present(alert,animated: true, completion: nil)
         }
         
     }
@@ -65,6 +74,7 @@ class ViewController: UIViewController {
         let corrextAnswer = allQuestions.list[questionNumber].answer
         
         if corrextAnswer == pickedAnswer {
+            score += 1
             print("You got it!")
         }
         else {
@@ -75,6 +85,9 @@ class ViewController: UIViewController {
     
     
     func startOver() {
+        questionNumber = 0
+        score = 0
+        nextQuestion()
        
     }
     
